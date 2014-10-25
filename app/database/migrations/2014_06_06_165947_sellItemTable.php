@@ -17,6 +17,7 @@ class SellItemTable extends Migration {
             $table->integer("productId")->unsigned();
             $table->string("productName");
             $table->double("productPrice");
+            $table->unsignedInteger("quantity");
             $table->integer("sell_id")->unsigned();
             $table->foreign("sell_id")->references("id")->on("sells");
         });
