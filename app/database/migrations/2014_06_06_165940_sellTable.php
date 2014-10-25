@@ -15,6 +15,7 @@ class SellTable extends Migration {
 		Schema::create('sells', function(Blueprint $table) {
             $table->increments("id");
             $table->integer("user_id")->unsigned();
+            $table->string("mobile",25)->nullable();
             $table->timestamps();
             $table->foreign("user_id")->references("id")->on("users");
         });

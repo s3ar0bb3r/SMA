@@ -14,7 +14,7 @@ class AddMobileToSells extends Migration {
 	{
 		Schema::table('sells', function(Blueprint $table)
 		{
-			$table->string("mobile",25)->nullable();
+
 		});
 	}
 
