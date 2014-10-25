@@ -17,7 +17,9 @@ class CreateIncomeEntryTable extends Migration {
             $table->double("amount");
             $table->string("comment")->nullable();
             $table->integer("income_type_id")->unsigned();
+            $table->integer("user_id")->unsigned();
             $table->foreign("income_type_id")->references("id")->on("income_types");
+            $table->foreign("user_id")->references("id")->on("users");
             $table->timestamps();
         });
 	}
