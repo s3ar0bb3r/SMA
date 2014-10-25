@@ -106,28 +106,27 @@ class SeedMenus extends Migration {
                     'min_weight' => 4
                 ),
                 array(
-                    array(
-                        'title' => "Beneficiary",
-                        'nav_menu' => 'payroll',
-                        'ui_class' => 'icon-large icon-old-man',
-                        'tab_id' => 'beneficiary',
-                        'min_weight' => 4
-                    ),
-                    array(
-                        'title' => "Salary",
-                        'nav_menu' => 'payroll',
-                        'ui_class' => 'icon-large icon-pie-chart',
-                        'tab_id' => 'salary',
-                        'min_weight' => 4
-                    ),
-                    array(
-                        'title' => "Loan Given",
-                        'nav_menu' => 'payroll',
-                        'ui_class' => 'icon-large icon-credit',
-                        'tab_id' => 'loan',
-                        'min_weight' => 4
-                    )
+                    'title' => "Beneficiary",
+                    'nav_menu' => 'payroll',
+                    'ui_class' => 'icon-large icon-old-man',
+                    'tab_id' => 'beneficiary',
+                    'min_weight' => 4
+                ),
+                array(
+                    'title' => "Salary",
+                    'nav_menu' => 'payroll',
+                    'ui_class' => 'icon-large icon-pie-chart',
+                    'tab_id' => 'salary',
+                    'min_weight' => 4
+                ),
+                array(
+                    'title' => "Loan Given",
+                    'nav_menu' => 'payroll',
+                    'ui_class' => 'icon-large icon-credit',
+                    'tab_id' => 'loan',
+                    'min_weight' => 4
                 )
+
             )
         );
 	}
