@@ -9,12 +9,11 @@
 | application. Here you may also register your custom route filters.
 |
 */
-App::before(function($request)
-{
-    date_default_timezone_set('Asia/Dhaka');
+App::before(function($request) {
+
 });
-App::after(function($request, $response)
-{
+
+App::after(function($request, $response) {
 //
 });
 /*
@@ -27,8 +26,7 @@ App::after(function($request, $response)
 | integrates HTTP Basic authentication for quick, simple checking.
 |
 */
-Route::filter('auth', function()
-{
+Route::filter('auth', function() {
     if (Auth::guest()) {
         return Redirect::guest('/');
     }
