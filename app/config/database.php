@@ -65,7 +65,7 @@ return array(
         'local' => array(
 			'driver'    => 'mysql',
 			'host'      => '127.0.0.1',
-			'database'  => 'laravel',
+			'database'  => 'sma',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',
