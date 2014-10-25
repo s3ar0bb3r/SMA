@@ -15,6 +15,7 @@ class LoanPaymentBackTable extends Migration {
             $table->increments("id");
             $table->double("amount");
             $table->integer("user_id")->unsigned();
+            $table->timestamps();
             $table->integer("load_given_id")->unsigned();
             $table->foreign("user_id")->references("id")->on("users");
             $table->foreign("load_given_id")->references("id")->on("loan_given");

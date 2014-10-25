@@ -13,7 +13,11 @@ class TransportFeeTable extends Migration {
             $table->double("discount")->defalts(0);
             $table->double("fine")->defalts(0);
             $table->string("comment")->nullable();
+            $table->integer("student_id")->unsigned();
             $table->timestamps();
+            $table->foreign("student_id")->references("id")->on("students");
+            $table->integer("user_id")->unsigned();
+            $table->foreign("user_id")->references("id")->on("users");
             $table->integer("transport_fee_count_id")->unsigned();
             $table->foreign("transport_fee_count_id")->references("id")->on("transport_fee_counts");
         });

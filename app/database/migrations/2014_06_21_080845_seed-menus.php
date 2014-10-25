@@ -83,6 +83,27 @@ class SeedMenus extends Migration {
                     'ui_class' => 'glyphicon glyphicon-export',
                     'tab_id' => 'expense_entry',
                     'min_weight' => 1
+                ),
+                array(
+                    'title' => "Tuition Fee",
+                    'nav_menu' => 'administrator',
+                    'ui_class' => 'icon-large icon-calendar',
+                    'tab_id' => 'tuition_fee',
+                    'min_weight' => 4
+                ),
+                array(
+                    'title' => "Transport Fee",
+                    'nav_menu' => 'administrator',
+                    'ui_class' => 'icon-large icon-bus',
+                    'tab_id' => 'transport_fee',
+                    'min_weight' => 4
+                ),
+                array(
+                    'title' => "Registration",
+                    'nav_menu' => 'admission',
+                    'ui_class' => 'glyphicon glyphicon-registration-mark',
+                    'tab_id' => 'registration',
+                    'min_weight' => 4
                 )
             )
         );
