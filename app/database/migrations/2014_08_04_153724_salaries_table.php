@@ -16,6 +16,9 @@ class SalariesTable extends Migration {
             $table->integer("month");
             $table->integer("year");
             $table->double("amount");
+            $table->float("extra_payment")->default(0);
+            $table->float("deduction")->default(0);
+            $table->string("comment")->nullable();
             $table->integer("user_id")->unsigned();
             $table->integer("beneficiary_id")->unsigned();
             $table->timestamps();

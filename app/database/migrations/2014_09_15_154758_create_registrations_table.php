@@ -15,6 +15,7 @@ class CreateRegistrationsTable extends Migration {
         Schema::create("registrations", function(Blueprint $table){
             $table->engine = "InnoDB";
             $table->increments("id");
+            $table->string("student_unique_id");
             $table->timestamps();
             $table->boolean("has_transport");
             $table->float("transport_fee")->nullable();
@@ -28,6 +29,7 @@ class CreateRegistrationsTable extends Migration {
             $table->string("relative_section")->nullable();
             $table->boolean("is_readmission");
             $table->float("fee");
+            $table->string("area")->nullable();
             $table->float("tuition_fee");
             $table->integer("student_id")->unsigned();
             $table->foreign("student_id")->references("id")->on("student_informations");

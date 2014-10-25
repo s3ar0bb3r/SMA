@@ -14,10 +14,7 @@ class AddImagesToStudentInfo extends Migration {
 	{
         Schema::table('student_informations', function(Blueprint $table)
         {
-            $table->string("student_img")->nullable();
-            $table->string("father_img")->nullable();
-            $table->string("mother_img")->nullable();
-            $table->string("guardian_img")->nullable();
+
         });
 	}
 
@@ -30,10 +27,7 @@ class AddImagesToStudentInfo extends Migration {
 	{
         Schema::table('student_informations', function(Blueprint $table)
         {
-            $table->dropColumn("student_img");
-            $table->dropColumn("father_img");
-            $table->dropColumn("mother_img");
-            $table->dropColumn("guardian_img");
+
         });
 	}
 

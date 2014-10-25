@@ -27,6 +27,10 @@ class CreateStudentInfo extends Migration {
             $table->string("address")->nullable();
             $table->string("contact_number")->nullable();
             $table->string("email")->nullable();
+            $table->string("student_img")->nullable();
+            $table->string("father_img")->nullable();
+            $table->string("mother_img")->nullable();
+            $table->string("guardian_img")->nullable();
         });
 	}
 
