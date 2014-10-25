@@ -12,7 +12,7 @@ class CreateExpenseEntryTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create("expense_entries", function(Blueprint $table) {
+        Schema::create("expenses", function(Blueprint $table) {
             $table->increments("id");
             $table->double("amount");
             $table->string("comment")->nullable();

@@ -12,7 +12,7 @@ class CreateIncomeEntryTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create("income_entries", function(Blueprint $table) {
+        Schema::create("incomes", function(Blueprint $table) {
             $table->increments("id");
             $table->double("amount");
             $table->string("comment")->nullable();

@@ -19,7 +19,7 @@ class CreateRegistrationsTable extends Migration {
             $table->boolean("has_transport");
             $table->float("transport_fee")->nullable();
             $table->string("clazz");
-            $table->dateTime("year");
+            $table->integer("year");
             $table->string("section")->nullable();
             $table->string("shift")->nullable();
             $table->boolean("has_relative");
