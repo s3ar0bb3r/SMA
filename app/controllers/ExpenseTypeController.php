@@ -1,5 +1,5 @@
 <?php
-class ExpenseController extends \BaseController {
+class ExpenseTypeController extends \BaseController {
 
     public function __construct()
     {
@@ -8,20 +8,36 @@ class ExpenseController extends \BaseController {
     public function getLoadTable() {
         $max = Input::get("max") ? intval(Input::get("max")): 10;
         $offset = Input::get("offset") ? intval(Input::get("offset")) : 0;
-        $searchText = Input::get("searchText") ? Input::get("searchText") : "";
-        $expense_list = ExpenseService::getExpenses();
-        $total = ExpenseService::getCounts();
+        $searchText = Input::get("searchText");
+        $array = array();
+        $query = "";
+        if($searchText) {
+            $query = $query."name Like ?";
+            $text = trim(Input::get("searchText")) ;
+            array_push($array, "%".$text."%");
+        }
+        $expenseTypes = null;
+        $total = 0;
+        if(count($array) > 0 ) {
+            $expenseTypes = ExpenseType::whereRaw($query, $array)->take($max)->skip($offset)->get();
+            $total = ExpenseType::whereRaw($query, $array)->count();
+        } else {
+            $expenseTypes = ExpenseType::take($max)->skip($offset)->orderBy('id', "ASC")->get();
+            $total = ExpenseType::count();
+        }
         return View::make("expense.tableView", array(
-            'expenses' => $expense_list,
+            'expenses' => $expenseTypes,
             'total' => $total,
             'max' => $max,
             'offset' => $offset,
             'searchText' => $searchText
         ));
     }
+
     public function getCreate() {
         return View::make("expense.create");
     }
+
     public function getEdit() {
         $id = Input::get("id");
         $expense = Expense_type::find($id);

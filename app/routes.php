@@ -49,14 +49,14 @@ Route::get("/expense/create", "ExpenseController@create");
 Route::post("/expense/save", "ExpenseController@save");
 Route::get("/expense/edit", "ExpenseController@edit");*/
 
-Route::get("/income/loadTable", "IncomeController@loadTable");
-Route::get("/income/create", "IncomeController@create");
-Route::post("/income/save", "IncomeController@save");
-Route::get("/income/edit", "IncomeController@edit");
+Route::get("/income/loadTable", "IncomeTypeController@loadTable");
+Route::get("/income/create", "IncomeTypeController@create");
+Route::post("/income/save", "IncomeTypeController@save");
+Route::get("/income/edit", "IncomeTypeController@edit");
 
 Route::controller('user', 'UserController');
 Route::controller('registration', 'RegistrationController');
-Route::controller('expense', 'ExpenseController');
+Route::controller('expense', 'ExpenseTypeController');
 Route::controller('beneficiary', 'BeneficiaryController');
 Route::controller('salary', 'SalaryController');
 Route::controller('loan', 'LoanController');

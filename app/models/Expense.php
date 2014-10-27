@@ -1,9 +1,9 @@
 <?php
-class ExpenseEntry extends Eloquent{
-    protected $table = 'expense_entries';
+class Expense extends Eloquent{
+    protected $table = 'expenses';
 
     public function expenseType(){
-        return $this->belongsTo("Expense_type");
+        return $this->belongsTo("ExpenseType");
     }
 
     public function name(){

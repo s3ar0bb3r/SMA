@@ -1,28 +1,40 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: USER
- * Date: 8/18/14
- * Time: 10:12 PM
- */
-class IncomeController extends BaseController {
+
+class IncomeTypeController extends BaseController {
+
     public function loadTable() {
         $max = Input::get("max") ? intval(Input::get("max")): 10;
         $offset = Input::get("offset") ? intval(Input::get("offset")) : 0;
         $searchText = Input::get("searchText") ? Input::get("searchText") : "";
-        $income_list = IncomeService::getIncomes();
-        $total = IncomeService::getCounts();
+        $array = array();
+        $query = "";
+        if($searchText) {
+            $query = $query."name Like ?";
+            $text = trim($searchText) ;
+            array_push($array, "%".$text."%");
+        }
+        $incomes = null;
+        $total = 0;
+        if(count($array) > 0 ) {
+            $incomes = IncomeType::whereRaw($query, $array)->take($max)->skip($offset)->get();
+            $total = IncomeType::whereRaw($query, $array)->count();
+        } else {
+            $incomes = IncomeType::take($max)->skip($offset)->orderBy('id', "ASC")->get();
+            $total = IncomeType::count();
+        }
         return View::make("income.tableView", array(
-            'income' => $income_list,
+            'income' => $incomes,
             'total' => $total,
             'max' => $max,
             'offset' => $offset,
             'searchText' => $searchText
         ));
     }
+
     public function create() {
         return View::make("income.create");
     }
+
     public function edit() {
         $id = Input::get("id");
         $income = Income_type::find($id);

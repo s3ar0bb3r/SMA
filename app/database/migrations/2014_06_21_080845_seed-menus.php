@@ -43,10 +43,10 @@ class SeedMenus extends Migration {
                     'min_weight' => 4
                 ),
                 array(
-                    'title' => "Admission",
+                    'title' => "Student",
                     'nav_menu' => 'admission',
                     'ui_class' => 'glyphicon glyphicon-user',
-                    'tab_id' => 'admission',
+                    'tab_id' => 'student',
                     'min_weight' => 4
                 ),
                 array(
@@ -71,29 +71,29 @@ class SeedMenus extends Migration {
                     'min_weight' => 1
                 ),
                 array(
-                    'title' => "Income Entry",
-                    'nav_menu' => 'administrator',
+                    'title' => "Income",
+                    'nav_menu' => 'account',
                     'ui_class' => 'glyphicon glyphicon-import',
-                    'tab_id' => 'income_entry',
+                    'tab_id' => 'income',
                     'min_weight' => 1
                 ),
                 array(
-                    'title' => "Expense Entry",
-                    'nav_menu' => 'administrator',
+                    'title' => "Expense",
+                    'nav_menu' => 'account',
                     'ui_class' => 'glyphicon glyphicon-export',
-                    'tab_id' => 'expense_entry',
+                    'tab_id' => 'expense',
                     'min_weight' => 1
                 ),
                 array(
                     'title' => "Tuition Fee",
-                    'nav_menu' => 'administrator',
+                    'nav_menu' => 'accounts',
                     'ui_class' => 'icon-large icon-calendar',
                     'tab_id' => 'tuition_fee',
                     'min_weight' => 4
                 ),
                 array(
                     'title' => "Transport Fee",
-                    'nav_menu' => 'administrator',
+                    'nav_menu' => 'account',
                     'ui_class' => 'icon-large icon-bus',
                     'tab_id' => 'transport_fee',
                     'min_weight' => 4

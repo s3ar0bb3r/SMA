@@ -6,7 +6,8 @@ class OSMS {
         'admission' => "Admission",
         'sells' => "Sells",
         'payroll' => "Payroll",
-         'administrator' => "Administrator"
+        'account' => "Accounts",
+        'administrator' => "Administrator"
     );
 
     static $USER_TYPE = array(
