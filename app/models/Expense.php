@@ -6,6 +6,10 @@ class Expense extends Eloquent{
         return $this->belongsTo("ExpenseType");
     }
 
+    public function expenseBy() {
+        return $this->belongsTo("User", "user_id");
+    }
+
     public function name(){
         return Expense_type::find($this->expense_type_id)->name;
     }

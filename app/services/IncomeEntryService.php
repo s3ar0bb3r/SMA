@@ -44,9 +44,4 @@ class IncomeEntryService {
         return $incomes->get();
     }
 
-
-    public static function saveIncome( $type, $amount, $income_type ) {
-
-        return true;
-    }
 }

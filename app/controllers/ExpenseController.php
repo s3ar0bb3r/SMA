@@ -15,10 +15,24 @@ class ExpenseController extends BaseController {
         $max = Input::get("max") ? intval(Input::get("max")): 10;
         $offset = Input::get("offset") ? intval(Input::get("offset")) : 0;
         $searchText = Input::get("searchText") ? Input::get("searchText") : "";
-        $expense_list = ExpenseEntryService::getExpenses();
-        $total = ExpenseEntryService::getCounts();
+        $array = array();
+        $query = "";
+        if($searchText) {
+            $query = $query."name Like ?";
+            $text = trim($searchText) ;
+            array_push($array, "%".$text."%");
+        }
+        $expenses = null;
+        $total = 0;
+        if(count($array) > 0 ) {
+            $expenses = Expense::whereRaw($query, $array)->take($max)->skip($offset)->orderBy('id', "DESC")->get();
+            $total =  Expense::whereRaw($query, $array)->count();
+        } else {
+            $expenses = Expense::take($max)->skip($offset)->orderBy('id', "DESC")->get();
+            $total = Expense::count();
+        }
         return View::make("expenseEntry.tableView", array(
-            'expenseE' => $expense_list,
+            'expenses' => $expenses,
             'total' => $total,
             'max' => $max,
             'offset' => $offset,
@@ -26,7 +40,7 @@ class ExpenseController extends BaseController {
         ));
     }
     public function getCreate() {
-        $expenseAll = Expense_type::all();
+        $expenseAll = ExpenseType::all();
         $expenseTypes = array('' => "None");
         foreach($expenseAll as $exp) {
             $expenseTypes[$exp->id] = $exp->name;
@@ -38,22 +52,24 @@ class ExpenseController extends BaseController {
     {
         $rules = array(
             'expenseType' => 'required',
-            'amount' => 'required'
+            'amount' => 'required|numeric'
         );
         $inputs = Input::all();
         $validator = Validator::make($inputs, $rules);
         if($validator->fails()) {
             return array('status' => 'error', 'message' => $validator->messages()->all());
         }
-        $id = Input::get("expenseType");
         $amount = Input::get("amount");
         $expense_type_id = Input::get("expenseType");
-        if(ExpenseEntryService::saveExpenseEntry($id,$amount,$expense_type_id)){
-            return array('status' => 'success', 'message' => 'Expense entry has been successfully saved');
-        }
-        else{
-            return array('status' => 'error', 'message' => 'Expense entry not added');
-        }
+        $user = Auth::user();
+        DB::transaction(function() use ($amount, $expense_type_id, $user){
+            $expense = new Expense();
+            $expense->expense_type_id = $expense_type_id;
+            $expense->amount = $amount;
+            $expense->user_id = $user->id;
+            $expense->save();
+        });
+        return array('status' => 'success', 'message' => 'Expense entry has been successfully saved');
     }
     public function getDateselect() {
         return View::make("expenseEntry.dateSelection");
@@ -78,7 +94,7 @@ class ExpenseController extends BaseController {
         if(strlen($query) <= 0) {
             return "invalid query";
         }
-        $expenses = ExpenseEntry::whereRaw($query, $array)->orderBy('created_at', 'ASC')->get();
+        $expenses = Expense::whereRaw($query, $array)->orderBy('created_at', 'ASC')->get();
         /*$allIncome = (array) null;
         foreach($incomes as $inc) {
             $allIncome[$inc->name()] = $inc->amount;

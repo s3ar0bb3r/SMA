@@ -1,7 +1,7 @@
 <div class="head">
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand">Expense Entries</a>
+            <a class="navbar-brand">Expenses</a>
         </div>
         <div>
             <div class="navbar-form navbar-right" role="search">
@@ -34,14 +34,16 @@
             <th>Id</th>
             <th>Type</th>
             <th>Amount</th>
+            <th>Expense By</th>
         </tr>
         </thead>
         <tbody>
-        <?php $expenseE->each(function($expenseE){ ?>
+        <?php $expenses->each(function($expense){ ?>
             <tr class="active">
-                <td><?php echo $expenseE->id; ?></td>
-                <td><?php echo $expenseE->expenseType->name ?></td>
-                <td><?php echo $expenseE->amount; ?></td>
+                <td><?php echo $expense->id; ?></td>
+                <td><?php echo $expense->expenseType->name ?></td>
+                <td><?php echo $expense->amount; ?></td>
+                <td><?php echo $expense->expenseBy->getFullName(); ?></td>
             </tr>
         <?php }); ?>
         </tbody>
