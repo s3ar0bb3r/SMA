@@ -48,19 +48,12 @@ class IncomeController extends BaseController {
         }
         return View::make("incomeEntry.create",array('incomeTypes' => $incomeTypes));
     }
-    public function getEdit() {
-        $id = Input::get("id");
-        $income = IncomeType::find($id);
-        return View::make("income.edit", array(
-            'income' => $income,
-        ));
-    }
 
     public function postSave()
     {
         $rules = array(
             'incomeType' => 'required',
-            'amount' => 'required'
+            'amount' => 'required|numeric'
         );
         $inputs = Input::all();
         $validator = Validator::make($inputs, $rules);
@@ -70,11 +63,12 @@ class IncomeController extends BaseController {
         $id = Input::get("incomeType");
         $amount = Input::get("amount");
         $income_type_id = Input::get("incomeType");
-        DB::transaction(function() use ($amount, $income_type_id){
-            $income = null;
+        $user = Auth::user();
+        DB::transaction(function() use ($amount, $income_type_id, $user){
             $income = new Income();
             $income->income_type_id = $income_type_id;
             $income->amount = $amount;
+            $income->user_id = $user->id;
             $income->save();
         });
         return array('status' => 'success', 'message' => 'Income type has been successfully saved');

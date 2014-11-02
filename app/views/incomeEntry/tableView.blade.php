@@ -34,14 +34,16 @@
             <th>Id</th>
             <th>Type</th>
             <th>Amount</th>
+            <th>Income By</th>
         </tr>
         </thead>
         <tbody>
-        <?php $incomeE->each(function($incomeE){ ?>
+        <?php $incomes->each(function($income){ ?>
             <tr class="active">
-                <td><?php echo $incomeE->id; ?></td>
-                <td><?php echo $incomeE->incomeType->name ?></td>
-                <td><?php echo $incomeE->amount; ?></td>
+                <td><?php echo $income->id; ?></td>
+                <td><?php echo $income->incomeType->name ?></td>
+                <td><?php echo $income->amount; ?></td>
+                <td><?php echo $income->incomeBy->getFullName(); ?></td>
             </tr>
         <?php }); ?>
         </tbody>

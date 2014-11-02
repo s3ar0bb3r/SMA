@@ -86,7 +86,7 @@ class SeedMenus extends Migration {
                 ),
                 array(
                     'title' => "Tuition Fee",
-                    'nav_menu' => 'accounts',
+                    'nav_menu' => 'account',
                     'ui_class' => 'icon-large icon-calendar',
                     'tab_id' => 'tuition_fee',
                     'min_weight' => 4
