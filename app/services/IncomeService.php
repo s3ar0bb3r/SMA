@@ -40,19 +40,7 @@ class IncomeService {
     }
 
     public static function saveIncomeType($id, $name, $description) {
-        DB::transaction(function() use ($id, $name, $description){
-            $income = null;
-            if($id){
-                $income = Income_type::find($id);
-            }
-            else{
-                $income = new Income_type();
-            }
-            $income->name = $name;
-            $income->description = $description;
-            $income->status = "Y";
-            $income->save();
-        });
+
         return true;
     }
 }

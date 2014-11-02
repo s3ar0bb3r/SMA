@@ -35,15 +35,17 @@ class ExpenseTypeController extends \BaseController {
     }
 
     public function getCreate() {
-        return View::make("expense.create");
+        $expenseType = new ExpenseType();
+        return View::make("expense.create", array(
+            'expenseType' => $expenseType,
+        ));
     }
 
     public function getEdit() {
         $id = Input::get("id");
-        $expense = Expense_type::find($id);
-        $des = $expense->description;
-        return View::make("expense.add", array(
-            'expense' => $expense,
+        $expenseType = ExpenseType::find($id);
+        return View::make("expense.create", array(
+            'expenseType' => $expenseType,
         ));
     }
 
@@ -60,12 +62,20 @@ class ExpenseTypeController extends \BaseController {
         $id = Input::get("id");
         $name = Input::get("name");
         $description = Input::get("description");
-        if(ExpenseService::saveExpenseType($id,$name,$description)){
-            return array('status' => 'success', 'message' => 'Expense type has been successfully saved');
-        }
-        else{
-            return array('status' => 'error', 'message' => 'Expense type not added');
-        }
+        DB::transaction(function() use ($id, $name, $description){
+            $expenseType = null;
+            if($id){
+                $expenseType = ExpenseType::find($id);
+            }
+            else{
+                $expenseType = new ExpenseType();
+            }
+            $expenseType->name = $name;
+            $expenseType->description = $description;
+            $expenseType->status = "Y";
+            $expenseType->save();
+        });
+        return array('status' => 'success', 'message' => 'Expense type has been successfully saved');
     }
 
     public function getAddExpense(){

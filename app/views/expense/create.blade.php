@@ -2,13 +2,13 @@
     <div class="form-group">
         <label class="col-sm-2 control-label">Name</label>
         <div class="col-sm-10">
-            <input type="text" name="name" class="form-control" placeholder="Expense Type Name"  value="">
+            <input type="text" name="name" class="form-control" placeholder="Expense Type Name"  value="{{$expenseType->name}}">
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">Description</label>
         <div class="col-sm-10">
-            <textarea type="text" name="description" class="form-control"></textarea>
+            <textarea type="text" name="description" class="form-control">{{$expenseType->description}}</textarea>
         </div>
     </div>
     <div class="form-group">

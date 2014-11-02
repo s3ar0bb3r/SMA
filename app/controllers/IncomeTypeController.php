@@ -32,14 +32,17 @@ class IncomeTypeController extends BaseController {
     }
 
     public function create() {
-        return View::make("income.create");
+        $incomeType = new IncomeType();
+        return View::make("income.edit", array(
+            'incomeType' => $incomeType,
+        ));
     }
 
     public function edit() {
         $id = Input::get("id");
-        $income = Income_type::find($id);
+        $incomeType = IncomeType::find($id);
         return View::make("income.edit", array(
-            'income' => $income,
+            'incomeType' => $incomeType,
         ));
     }
 
@@ -56,11 +59,19 @@ class IncomeTypeController extends BaseController {
         $id = Input::get("id");
         $name = Input::get("name");
         $description = Input::get("description");
-        if(IncomeService::saveIncomeType($id,$name,$description)){
-            return array('status' => 'success', 'message' => 'Income type has been successfully saved');
-        }
-        else{
-            return array('status' => 'error', 'message' => 'Income type not added');
-        }
+        DB::transaction(function() use ($id, $name, $description){
+            $incomeType = null;
+            if($id){
+                $incomeType = IncomeType::find($id);
+            }
+            else{
+                $incomeType = new IncomeType();
+            }
+            $incomeType->name = $name;
+            $incomeType->description = $description;
+            $incomeType->status = "Y";
+            $incomeType->save();
+        });
+        return array('status' => 'success', 'message' => 'Income type has been successfully saved');
     }
 }

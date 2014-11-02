@@ -6,7 +6,7 @@
  * Time: 10:48 PM
  */
 
-class ExpenseEntryController extends BaseController {
+class ExpenseController extends BaseController {
     public function __construct()
     {
         $this->beforeFilter('super_admin', array('except' => array("loadTable")));

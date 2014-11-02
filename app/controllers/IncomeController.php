@@ -6,27 +6,42 @@
  * Time: 10:48 PM
  */
 
-class IncomeEntryController extends BaseController {
-    public function __construct()
-    {
+class IncomeController extends BaseController {
+    public function __construct() {
         $this->beforeFilter('super_admin', array('except' => array("loadTable")));
     }
+
     public function getLoadTable() {
         $max = Input::get("max") ? intval(Input::get("max")): 10;
         $offset = Input::get("offset") ? intval(Input::get("offset")) : 0;
-        $searchText = Input::get("searchText") ? Input::get("searchText") : "";
-        $income_list = IncomeEntryService::getIncomes();
-        $total = IncomeEntryService::getCounts();
+        $searchText = Input::get("searchText");
+        $array = array();
+        $query = "";
+        if($searchText) {
+            $query = $query."name Like ?";
+            $text = trim($searchText);
+            array_push($array, "%".$text."%");
+        }
+        $incomes = null;
+        $total = 0;
+        if(count($array) > 0 ) {
+            $incomes = Income::whereRaw($query, $array)->take($max)->skip($offset)->get();
+            $total = Income::whereRaw($query, $array)->count();
+        } else {
+            $incomes = Income::take($max)->skip($offset)->orderBy('id', "ASC")->get();
+            $total = Income::count();
+        }
         return View::make("incomeEntry.tableView", array(
-            'incomeE' => $income_list,
+            'incomes' => $incomes,
             'total' => $total,
             'max' => $max,
             'offset' => $offset,
             'searchText' => $searchText
         ));
     }
+
     public function getCreate() {
-        $incomeAll = Income_type::all();
+        $incomeAll = IncomeType::all();
         $incomeTypes = array('' => "None");
         foreach($incomeAll as $inc) {
             $incomeTypes[$inc->id] = $inc->name;
@@ -35,7 +50,7 @@ class IncomeEntryController extends BaseController {
     }
     public function getEdit() {
         $id = Input::get("id");
-        $income = Income_type::find($id);
+        $income = IncomeType::find($id);
         return View::make("income.edit", array(
             'income' => $income,
         ));
@@ -55,12 +70,14 @@ class IncomeEntryController extends BaseController {
         $id = Input::get("incomeType");
         $amount = Input::get("amount");
         $income_type_id = Input::get("incomeType");
-        if(IncomeEntryService::saveIncomeEntry($id,$amount,$income_type_id)){
-            return array('status' => 'success', 'message' => 'Income type has been successfully saved');
-        }
-        else{
-            return array('status' => 'error', 'message' => 'Income type not added');
-        }
+        DB::transaction(function() use ($amount, $income_type_id){
+            $income = null;
+            $income = new Income();
+            $income->income_type_id = $income_type_id;
+            $income->amount = $amount;
+            $income->save();
+        });
+        return array('status' => 'success', 'message' => 'Income type has been successfully saved');
     }
 
     public function getDateselect() {
