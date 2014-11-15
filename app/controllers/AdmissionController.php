@@ -5,10 +5,24 @@ Class AdmissionController extends BaseController {
     public function loadTable() {
         $max = Input::get("max") ? intval(Input::get("max")): 10;
         $offset = Input::get("offset") ? intval(Input::get("offset")) : 0;
-        $searchText = Input::get("searchText") ? Input::get("searchText") : "";
-        $students = AdmissionService::getStudents();
-        $total = AdmissionService::getCounts();
-        return View::make("admission.tableView", array(
+        $searchText = Input::get("searchText");
+        $array = array();
+        $query = "";
+        if($searchText) {
+            $query = $query."student_id Like ?";
+            $text = trim(Input::get("searchText")) ;
+            array_push($array, "%".$text."%");
+        }
+        $students = null;
+        $total = 0;
+        if(count($array) > 0 ) {
+            $students = Student::whereRaw($query, $array)->take($max)->skip($offset)->get();
+            $total = Student::whereRaw($query, $array)->count();
+        } else {
+            $students = Student::take($max)->skip($offset)->orderBy('id', "ASC")->get();
+            $total = Student::count();
+        }
+        return View::make("student.tableView", array(
             'students' => $students,
             'total' => $total,
             'max' => $max,
@@ -17,20 +31,18 @@ Class AdmissionController extends BaseController {
         ));
     }
 
-    public function create()
-    {
-        return View::make("admission.create");
+    public function create() {
+        return View::make("student.create");
     }
 
-    public function edit()
-    {
+    public function edit() {
         $id = Input::get("id");
         $student = null;
         if($id){
-            $student = StudentInformation::find($id);
+            $student = Student::find($id);
         }
         else{
-            $student = new StudentInformation();
+            $student = new Student();
         }
         $absoulate_path = public_path();
         $student_img = null;
@@ -54,7 +66,7 @@ Class AdmissionController extends BaseController {
                 $guardian_img = $imagePath.$student->guardian_img;
             }
         }
-        return View::make("admission.edit", array(
+        return View::make("student.edit", array(
             'student_img' => $student_img,
             'father_img' => $father_img,
             'mother_img'  => $mother_img,
@@ -75,18 +87,16 @@ Class AdmissionController extends BaseController {
         }
         else{
             $rules = array(
-                'student_ID' => 'required|AlphaNum|unique:student_informations,student_id',
+                'student_ID' => 'required|AlphaNum|unique:students,student_id',
                 'student_name' => 'required'
             );
         }
-        $registration = null;
-
         $student = null;
         if($id){
-            $student = StudentInformation::find($id);
+            $student = Student::find($id);
         }
         else{
-            $student = new StudentInformation();
+            $student = new Student();
         }
         $inputs = Input::all();
         $validator = Validator::make($inputs, $rules);
@@ -104,7 +114,7 @@ Class AdmissionController extends BaseController {
         $tuition = Input::get("tuition");
         $mother_name = Input::get("mother_name");
         $guardian_name = Input::get("guardian_name");
-        $birth = DateTime::createFromFormat('d-m-Y',Input::get("date_birth"));
+        $birth = DateTime::createFromFormat('d-m-Y', Input::get("date_birth"));
         $gender = Input::get("gender");
         $nationality = Input::get("nationality");
         $religion = Input::get("religion");

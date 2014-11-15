@@ -12,10 +12,6 @@
                 <button type="button" class="btn btn-default btn-sm create-admission" title="New Admission">
                     <span class="glyphicon glyphicon-plus-sign"></span>
                 </button>
-
-                <button type="button" class="btn btn-default btn-sm tool-icon create-report" title="Print Report">
-                    <span class="glyphicon glyphicon-plus-sign"></span>
-                </button>
             </div>
         </div>
     </nav>
@@ -49,9 +45,6 @@
                 <td>
                     <button type="button" class="btn btn-default btn-xs action-menu" data-id="<?php echo $student->id; ?>" action="edit" title="Edit Student">
                         <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <button type="button" class="btn btn-default btn-xs action-menu" data-id="<?php echo $student->id; ?>" action="print" title="Print Student">
-                        <span class="glyphicon glyphicon-book"></span>
                     </button>
                 </td>
             </tr>
