@@ -43,7 +43,7 @@ class RegistrationController extends BaseController {
     }
 
     public function getCreate(){
-        $student = StudentInformation::all();
+        $student = Student::all();
         $students = array('' => "None");
         foreach($student as $std) {
             $students[$std->id] = $std->student_id;
@@ -58,7 +58,7 @@ class RegistrationController extends BaseController {
         $student = null;
         if($id){
             $registration = Registration::find($id);
-            $student = StudentInformation::find($registration->student_id);
+            $student = Student::find($registration->student_id);
         }
         else{
             $registration = new Registration();
@@ -107,7 +107,7 @@ class RegistrationController extends BaseController {
         $student = null;
 
         if($student_id){
-            $student = StudentInformation::where('student_id' , '=', $student_id)->first();;
+            $student = Student::where('student_id' , '=', $student_id)->first();;
         }
 
         if($id){
@@ -155,12 +155,12 @@ class RegistrationController extends BaseController {
                     $tuitionCount = new TuitionFeeCount();
                     $tuitionCount->year = $registration->year;
                     $tuitionCount->month_count = 0;
-                    $tuitionCount->student_information_id = $registration->student_id;
+                    $tuitionCount->student_id = $registration->student_id;
                     $success = $tuitionCount->save();
                     $transportCount = new TransportFeeCount();
                     $transportCount->year = $registration->year;
                     $transportCount->month_count = 0;
-                    $transportCount->student_information_id = $registration->student_id;
+                    $transportCount->student_id = $registration->student_id;
                     $success = $transportCount->save();
                 }
                 if(!$success) {

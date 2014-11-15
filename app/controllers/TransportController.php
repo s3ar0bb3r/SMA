@@ -13,7 +13,7 @@ class TransportController extends \BaseController {
         if(Input::get("searchText")) {
             $query = $query."student_information_id = ?";
             $text = trim(Input::get("searchText")) ;
-            $student  = StudentInformation::where("student_id", '=', $text)->get()->first();
+            $student  = Student::where("student_id", '=', $text)->get()->first();
             array_push($array, $student ? $student->id : 0);
             $flag = true;
         }
@@ -58,7 +58,7 @@ class TransportController extends \BaseController {
         if(!$registration->has_transport) {
             return array("status" => "error", 'message' => "Student do not use transport service");
         }
-        $transportCount = TransportFeeCount::where('year', '=', $year)->where("student_information_id", "=", $registration->student_id)->get()->first();
+        $transportCount = TransportFeeCount::where('year', '=', $year)->where("student_id", "=", $registration->student_id)->get()->first();
         $html = View::make("transport.transportFeeNextStep", array("registration" => $registration, 'transportCount' => $transportCount));
         return array("status" => "success", "html" => $html->render());
     }
@@ -67,7 +67,7 @@ class TransportController extends \BaseController {
         $sid = Input::get("studentId");
         $year = (int) Input::get("year");
         $registration  = Registration::where("student_unique_id", '=', $sid)->where("year", "=", $year)->get()->first();
-        $transportCount = TransportFeeCount::where('year', '=', $year)->where('student_information_id', '=', $registration->student_id)->get()->first();
+        $transportCount = TransportFeeCount::where('year', '=', $year)->where('student_id', '=', $registration->student_id)->get()->first();
         $noOfMonth = (int) Input::get("monthCount");
         $amount = $registration->transport_fee * $noOfMonth;
         $discount = (double) Input::get("discount") ?: 0;
@@ -85,7 +85,7 @@ class TransportController extends \BaseController {
             $transport->discount = $discount;
             $transport->fine = $fine;
             $transport->comment = Input::get("comment");
-            $transport->student_information_id = $registration->student_id;
+            $transport->student_id = $registration->student_id;
             $transport->user_id = $user->id;
             $transport->transport_fee_count_id = $transportCount->id;
             $transportCount->save();
