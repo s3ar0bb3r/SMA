@@ -129,6 +129,17 @@ class SeedMenus extends Migration {
 
             )
         );
+
+        DB:table("users")->insert(array(
+            array(
+                "username" => "admin",
+                "password" => "SH9nDGIPyh08KLDQZAYpzlWWPDa3CmDpPN0AKGP44Ua8kYAfnPfdCwhhXMlj",
+                "email" => "sajed1990@gmail.com",
+                "first_name" => "Sajidur",
+                "last_name" => "Rahman",
+                "weight" => 10
+            )
+        ));
 	}
 
 	/**
